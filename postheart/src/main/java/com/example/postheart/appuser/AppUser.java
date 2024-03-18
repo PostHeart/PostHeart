@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,17 +35,17 @@ public class AppUser implements UserDetails{
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
-    )
-    private final Long id;
-    private final String username;
-    private final String password;
-    private final String email; 
+    )//was private?
+    private Long id;
+    private String username;
+    private String password;
+    private String email; 
     @Enumerated(EnumType.STRING)
-    private final AppUserRole appUserRole;
-    private final boolean isAccountNonExpired;
-    private final boolean isAccountNonLocked;
-    private final boolean isCredentialsNonExpired;
-    private final boolean isEnabled;
+    private AppUserRole appUserRole;
+    private boolean isAccountNonExpired;
+    private boolean isAccountNonLocked;
+    private boolean isCredentialsNonExpired;
+    private boolean isEnabled;
 
     public AppUser(String username, String password, String email, AppUserRole appUserRole, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
         this.username = username;
