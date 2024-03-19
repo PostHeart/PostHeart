@@ -25,7 +25,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 public class AppUser implements UserDetails{
-
+    //at some point I'm going to have to add attribuite markers which should be a list or collection of lists, finish emailfirst
     @Id
     @SequenceGenerator(
             name = "user_sequence",
