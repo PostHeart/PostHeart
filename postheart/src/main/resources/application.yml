@@ -5,15 +5,16 @@ server:
 
 spring:
   datasource:
-    password: LEOjavoSQL!1
-    url: jdbc:postgresql://localhost:5432/registration
-    username: postgres
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://registar.database.windows.net:1433;databaseName=registardb
+    username: PostHeartAdmin1
+    password: PostPass119!
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
         format_sql: true
     show-sql: true
 
