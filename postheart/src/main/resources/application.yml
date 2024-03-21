@@ -9,6 +9,7 @@ spring:
     url: jdbc:sqlserver://registar.database.windows.net:1433;databaseName=registardb
     username: PostHeartAdmin1
     password: PostPass119!
+    #make sure to change these to secret ones ^^^ maybe when I host the website I'll have to configure it to use environment variables
   jpa:
     hibernate:
       ddl-auto: update

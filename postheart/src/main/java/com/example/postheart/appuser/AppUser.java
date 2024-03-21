@@ -25,7 +25,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 public class AppUser implements UserDetails{
-    //at some point I'm going to have to add attribuite markers which should be a list or collection of lists, finish emailfirst
+    //at some point I'm going to have to add attribuite markers which should be a list of marker objects with the properties
     @Id
     @SequenceGenerator(
             name = "user_sequence",
@@ -35,11 +35,13 @@ public class AppUser implements UserDetails{
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
-    )//was private?
+    )//was private? also video changes username to first and last maybe later I'll change it back
     private Long id;
-    private String username;
+    private String firstName;
+    private String lastName;
     private String password;
-    private String email; 
+    private String email;
+    private String name; 
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
     private boolean isAccountNonExpired;
@@ -47,15 +49,13 @@ public class AppUser implements UserDetails{
     private boolean isCredentialsNonExpired;
     private boolean isEnabled;
 
-    public AppUser(String username, String password, String email, AppUserRole appUserRole, boolean isAccountNonExpired, boolean isAccountNonLocked, boolean isCredentialsNonExpired, boolean isEnabled) {
-        this.username = username;
+    public AppUser(String firstName,String lastName, String password, String email, AppUserRole appUserRole) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.appUserRole = appUserRole;
-        this.isAccountNonExpired = isAccountNonExpired;
-        this.isAccountNonLocked = isAccountNonLocked;
-        this.isCredentialsNonExpired = isCredentialsNonExpired;
-        this.isEnabled = isEnabled;
+        
     }
     
     @Override
@@ -66,7 +66,7 @@ public class AppUser implements UserDetails{
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -74,8 +74,11 @@ public class AppUser implements UserDetails{
         return password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getFirstName() {
+        return firstName;
+    }
+    public String getLastName(){
+        return lastName;
     }
 
     public AppUserRole getAppUserRole() {
