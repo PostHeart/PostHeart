@@ -25,7 +25,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 public class AppUser implements UserDetails{
-    //at some point I'm going to have to add attribuite markers which should be a list of marker objects with the properties
+    //TODO: add attribuite markers which should be a list of marker objects with the properties
     @Id
     @SequenceGenerator(
             name = "user_sequence",
@@ -35,19 +35,19 @@ public class AppUser implements UserDetails{
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
-    )//was private? also video changes username to first and last maybe later I'll change it back
+    )
     private Long id;
     private String firstName;
     private String lastName;
     private String password;
     private String email;
-    private String name; 
+   
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
-    private boolean isAccountNonExpired;
-    private boolean isAccountNonLocked;
-    private boolean isCredentialsNonExpired;
-    private boolean isEnabled;
+    //private boolean isAccountNonExpired;
+    private boolean locked = false;
+    //private boolean isCredentialsNonExpired;
+    private boolean enabled = false;
 
     public AppUser(String firstName,String lastName, String password, String email, AppUserRole appUserRole) {
         this.firstName = firstName;
@@ -92,7 +92,7 @@ public class AppUser implements UserDetails{
 
     @Override
     public boolean isAccountNonLocked() {
-        return !isAccountNonLocked;
+        return !locked;
     }
 
     @Override
@@ -102,7 +102,7 @@ public class AppUser implements UserDetails{
 
     @Override
     public boolean isEnabled() {
-        return isEnabled;
+        return enabled;
     }
 
 }

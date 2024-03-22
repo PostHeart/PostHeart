@@ -12,7 +12,7 @@ spring:
     #make sure to change these to secret ones ^^^ maybe when I host the website I'll have to configure it to use environment variables
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop #change to validate when deploying
     properties:
       hibernate:
         dialect: org.hibernate.dialect.SQLServer2012Dialect
@@ -20,10 +20,10 @@ spring:
     show-sql: true
 
   mail:
-    host: localhost
+    host: cascadecalc.gmail.com
     port: 1025
-    username: hello
-    password: hello
+    username: cascadecalc.gmail.com
+    password: TyronWitAT1
 
     properties:
       mail:
