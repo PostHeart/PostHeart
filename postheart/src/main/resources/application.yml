@@ -7,9 +7,9 @@ spring:
   datasource:
     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
     url: jdbc:sqlserver://registar.database.windows.net:1433;databaseName=registardb
-    username: PostHeartAdmin1
-    password: PostPass119!
-    #make sure to change these to secret ones ^^^ maybe when I host the website I'll have to configure it to use environment variables
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+   
   jpa:
     hibernate:
       ddl-auto: create-drop #change to validate when deploying
@@ -20,10 +20,10 @@ spring:
     show-sql: true
 
   mail:
-    host: cascadecalc.gmail.com
-    port: 1025
-    username: cascadecalc.gmail.com
-    password: TyronWitAT1
+    host: smtp.gmail.com
+    port: 587
+    username: cascadecalc@gmail.com
+    password: ${MAIL_PASSWORD}
 
     properties:
       mail:
