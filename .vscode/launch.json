@@ -1,0 +1,29 @@
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "env": {
+                "DB_USERNAME": "PostHeartAdmin1",
+                "DB_PASSWORD": "PostPass119!"
+            }
+        },
+        {
+            "type": "java",
+            "name": "PostheartApplication",
+            "request": "launch",
+            "mainClass": "com.example.postheart.PostheartApplication",
+            "projectName": "postheart",
+            "env": {
+                "DB_USERNAME": "PostHeartAdmin1",
+                "DB_PASSWORD": "PostPass119!",
+                "MAIL_PASSWORD": "pmrnqhjmpivxpflu"
+            }
+        }
+    ]
+}

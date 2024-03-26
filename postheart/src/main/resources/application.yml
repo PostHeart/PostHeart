@@ -1,0 +1,38 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  datasource:
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://registar.database.windows.net:1433;databaseName=registardb
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+   
+  jpa:
+    hibernate:
+      ddl-auto: create-drop #change to validate when deploying
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServer2012Dialect
+        format_sql: true
+    show-sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: cascadecalc@gmail.com
+    password: ${MAIL_PASSWORD}
+
+    properties:
+      mail:
+        smtp:
+          ssl:
+            trust: "*"
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
