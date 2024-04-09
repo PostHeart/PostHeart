@@ -1,6 +1,7 @@
 package com.example.postheart.appuser;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,5 +50,20 @@ public class AppUserService implements UserDetailsService{
 
     public int enableAppUser(String email) {
         return appUserRepository.enableAppUser(email);
+    }
+
+    public List<Marker> getUserMarkers(String email) {
+        AppUser user = appUserRepository.findByEmail(email)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid user ID: " + email));
+        return user.getMarkers();
+    }
+
+    
+    public Marker addUserMarker(String email, Marker marker) {
+        AppUser user = appUserRepository.findByEmail(email)
+            .orElseThrow(() -> new IllegalArgumentException("Invalid user email: " + email));
+        user.getMarkers().add(marker);
+        appUserRepository.save(user);
+        return marker;
     }
 }

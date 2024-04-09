@@ -2,17 +2,20 @@ package com.example.postheart.appuser;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -37,6 +40,8 @@ public class AppUser implements UserDetails{
             generator = "user_sequence"
     )
     private Long id;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Marker> markers;
     private String firstName;
     private String lastName;
     private String password;
@@ -44,9 +49,7 @@ public class AppUser implements UserDetails{
    
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
-    //private boolean isAccountNonExpired;
     private boolean locked = false;
-    //private boolean isCredentialsNonExpired;
     private boolean enabled = false;
 
     public AppUser(String firstName,String lastName, String password, String email, AppUserRole appUserRole) {
@@ -103,6 +106,10 @@ public class AppUser implements UserDetails{
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+    
+    public List<Marker> getUserMarkers() {
+        return markers;
     }
 
 }
