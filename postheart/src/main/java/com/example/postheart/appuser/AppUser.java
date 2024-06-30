@@ -1,5 +1,6 @@
 package com.example.postheart.appuser;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -7,6 +8,9 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.example.postheart.appuser.marker.Marker;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -21,6 +25,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 @Getter
 @Setter
@@ -39,8 +44,9 @@ public class AppUser implements UserDetails{
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
     )
-    private Long id;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private Long appUserId;
+    
+    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Marker> markers;
     private String firstName;
     private String lastName;
@@ -58,6 +64,8 @@ public class AppUser implements UserDetails{
         this.password = password;
         this.email = email;
         this.appUserRole = appUserRole;
+        markers = new ArrayList<>();
+      
         
     }
     
@@ -111,5 +119,9 @@ public class AppUser implements UserDetails{
     public List<Marker> getUserMarkers() {
         return markers;
     }
+    public void setMarkers(List<Marker> list){
+        this.markers = list;
+    }
+    
 
 }

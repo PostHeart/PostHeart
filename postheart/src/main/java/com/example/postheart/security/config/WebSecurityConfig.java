@@ -11,6 +11,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.example.postheart.appuser.AppUserService;
 
@@ -23,7 +25,7 @@ import java.util.Arrays;
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
-public class WebSecurityConfig {
+public class WebSecurityConfig implements WebMvcConfigurer{
 
     private final AppUserService appUserService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -46,6 +48,7 @@ public class WebSecurityConfig {
             .csrf().disable()
             .authorizeRequests()
                 .requestMatchers("/api/v1/registration/**").permitAll()
+                .requestMatchers("/api/v1/user/*/markers").permitAll()
                 .anyRequest().authenticated()
             .and()
             .formLogin()
@@ -55,6 +58,14 @@ public class WebSecurityConfig {
             .httpBasic();
         return http.build();
     }
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/v1/user/*/markers")
+                .allowedOrigins("http://localhost:8080")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD")
+                .allowCredentials(true);
+    }
+    
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -65,6 +76,7 @@ public class WebSecurityConfig {
         configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+        source.registerCorsConfiguration("/api/v1/user/*/markers", configuration);
         return source;
     }
 }
