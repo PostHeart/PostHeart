@@ -1,23 +1,31 @@
 package com.example.postheart.appuser;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.example.postheart.appuser.marker.Marker;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 @Getter
 @Setter
@@ -36,7 +44,10 @@ public class AppUser implements UserDetails{
             strategy = GenerationType.SEQUENCE,
             generator = "user_sequence"
     )
-    private Long id;
+    private Long appUserId;
+    
+    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Marker> markers;
     private String firstName;
     private String lastName;
     private String password;
@@ -44,9 +55,7 @@ public class AppUser implements UserDetails{
    
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
-    //private boolean isAccountNonExpired;
     private boolean locked = false;
-    //private boolean isCredentialsNonExpired;
     private boolean enabled = false;
 
     public AppUser(String firstName,String lastName, String password, String email, AppUserRole appUserRole) {
@@ -55,6 +64,8 @@ public class AppUser implements UserDetails{
         this.password = password;
         this.email = email;
         this.appUserRole = appUserRole;
+        markers = new ArrayList<>();
+      
         
     }
     
@@ -104,5 +115,13 @@ public class AppUser implements UserDetails{
     public boolean isEnabled() {
         return enabled;
     }
+    
+    public List<Marker> getUserMarkers() {
+        return markers;
+    }
+    public void setMarkers(List<Marker> list){
+        this.markers = list;
+    }
+    
 
 }
